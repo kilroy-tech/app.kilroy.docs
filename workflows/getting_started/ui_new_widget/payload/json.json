@@ -1,0 +1,263 @@
+{
+    "name": "kilroy.docs/manager/ui_new_widget",
+    "version": "1",
+    "description": "",
+    "isInteractive": true,
+    "clean_up": true,
+    "inputs": [],
+    "outputs": [
+        "msg",
+        "widget_*"
+    ],
+    "args": {
+        "role": "*"
+    },
+    "steps": [
+        {
+            "operation": "set_value",
+            "isServer": true,
+            "args": {
+                "variable": "wfCleanupFlag",
+                "value": "1"
+            }
+        },
+        {
+            "operation": "step_group",
+            "isServer": true,
+            "args": {
+                "role": "*",
+                "message": "",
+                "timer": "24",
+                "isInteractive": true,
+                "canTerminate": true,
+                "success": [
+                    {
+                        "operation": "display_inline_form",
+                        "isServer": false,
+                        "args": {
+                            "formID": "picker",
+                            "form": "${formObj}",
+                            "success": [
+                                {
+                                    "operation": "set_var_to",
+                                    "isServer": true,
+                                    "args": {
+                                        "var_name": "formData",
+                                        "push_array_name": null,
+                                        "field_name": null,
+                                        "var_expr": {
+                                            "type": "value",
+                                            "arg": {}
+                                        }
+                                    }
+                                },
+                                {
+                                    "operation": "if_then_else",
+                                    "isServer": true,
+                                    "args": {
+                                        "condition": "\"${template}\" == \"-\"",
+                                        "success": [
+                                            {
+                                                "operation": "set_var_to",
+                                                "isServer": true,
+                                                "args": {
+                                                    "var_name": "formData",
+                                                    "push_array_name": null,
+                                                    "field_name": "widget_desc",
+                                                    "var_expr": {
+                                                        "type": "variable",
+                                                        "arg": "widget_desc"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "operation": "set_var_to",
+                                                "isServer": true,
+                                                "args": {
+                                                    "var_name": "formData",
+                                                    "push_array_name": null,
+                                                    "field_name": "widget_style",
+                                                    "var_expr": {
+                                                        "type": "variable",
+                                                        "arg": "widget_style"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "operation": "set_value",
+                                                "isServer": true,
+                                                "args": {
+                                                    "variable": "template",
+                                                    "value": ""
+                                                }
+                                            }
+                                        ],
+                                        "failure": [
+                                            {
+                                                "operation": "set_var_to",
+                                                "isServer": true,
+                                                "args": {
+                                                    "var_name": "settings",
+                                                    "push_array_name": null,
+                                                    "field_name": null,
+                                                    "var_expr": {
+                                                        "type": "app_settings",
+                                                        "arg": null
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "operation": "set_var_to",
+                                                "isServer": true,
+                                                "args": {
+                                                    "var_name": "temp",
+                                                    "push_array_name": null,
+                                                    "field_name": null,
+                                                    "var_expr": {
+                                                        "type": "object",
+                                                        "arg": "settings",
+                                                        "field_name": "${template}"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "operation": "set_var_to",
+                                                "isServer": true,
+                                                "args": {
+                                                    "var_name": "formData",
+                                                    "push_array_name": null,
+                                                    "field_name": "widget_desc",
+                                                    "var_expr": {
+                                                        "type": "object",
+                                                        "arg": "temp",
+                                                        "field_name": "desc"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "operation": "set_var_to",
+                                                "isServer": true,
+                                                "args": {
+                                                    "var_name": "formData",
+                                                    "push_array_name": null,
+                                                    "field_name": "widget_style",
+                                                    "var_expr": {
+                                                        "type": "object",
+                                                        "arg": "temp",
+                                                        "field_name": "style"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "operation": "display_inline_form",
+                                    "isServer": false,
+                                    "args": {
+                                        "formID": "default",
+                                        "form": {
+                                            "formPanels": [
+                                                {
+                                                    "name": "Start a new widget...",
+                                                    "description": "${template}",
+                                                    "sections": [
+                                                        {
+                                                            "fields": [
+                                                                {
+                                                                    "name": "widget_desc",
+                                                                    "type": "text",
+                                                                    "label": "Description",
+                                                                    "placeholder": ""
+                                                                },
+                                                                {
+                                                                    "name": "widget_style",
+                                                                    "type": "dropdown",
+                                                                    "label": "Style",
+                                                                    "pairs_as_string": true,
+                                                                    "pairs": "[  {\"name\" : \"Light\", \"value\" : 0 },{\"name\" : \"Dark\", \"value\" : 1 },{\"name\" : \"Dim\", \"value\" : 2 },{\"name\" : \"Blueprint\", \"value\" : 3 }]"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "success": [
+                                            {
+                                                "operation": "app_services",
+                                                "isServer": true,
+                                                "args": {
+                                                    "cmd": "start_app_diagram",
+                                                    "pdclass": "widget",
+                                                    "pdalias": "",
+                                                    "pddesc": "Widget: ${widget_desc}",
+                                                    "pdargs": "{\"ex_style\":\"${widget_style}\",\"desc\":\"${widget_desc}\"}"
+                                                }
+                                            },
+                                            {
+                                                "operation": "set_var_to",
+                                                "isServer": true,
+                                                "args": {
+                                                    "var_name": "res",
+                                                    "push_array_name": null,
+                                                    "field_name": null,
+                                                    "var_expr": {
+                                                        "type": "results",
+                                                        "arg": "__results__"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "operation": "app_services",
+                                                "isServer": false,
+                                                "args": {
+                                                    "cmd": "show_app_diagram",
+                                                    "pdalias": "${res}"
+                                                }
+                                            },
+                                            {
+                                                "operation": "set_value",
+                                                "isServer": true,
+                                                "args": {
+                                                    "variable": "msg",
+                                                    "value": "Launched widget ${res}"
+                                                }
+                                            }
+                                        ],
+                                        "failure": [
+                                            {
+                                                "operation": "set_value",
+                                                "isServer": true,
+                                                "args": {
+                                                    "variable": "msg",
+                                                    "value": "Widget launch was cancelled."
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "failure": [
+                                {
+                                    "operation": "set_value",
+                                    "isServer": true,
+                                    "args": {
+                                        "variable": "msg",
+                                        "value": "Widget launch was cancelled."
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "operation": "end",
+            "isServer": true,
+            "args": null
+        }
+    ],
+    "externalForms": {}
+}

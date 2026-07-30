@@ -1,0 +1,41 @@
+{
+    "manifestVersion": 2,
+    "id"            : "kilroy.docs",
+    "displayName"   : " Kilroy Documentation",
+    "desc"          : "Docs and References for Kilroy",
+    "version"       : "1.0",
+    "author"        : "Kilroy BC, LLC",
+    "authorInfoUrl" : "http://kilroy.tech",
+    "appInfoUrl"    : "/apps/kilroy.docs/info.html",
+    "appImageUrl"   : "/apps/kilroy.docs/images/logo.png",
+    "locked"        : true,
+    "override"      : true,
+    "hidden"        : false,
+    "start"         : "user",
+    "pdClasses": {
+        "getting_started"    : {
+            "pdName" : "getting_started",
+            "pdAlias": "kilroy.docs.getting_started",
+            "desc"  : "Getting Started",
+            "runOnStart": true,
+            "visible": true,
+            "multipleAllowed": false,
+            "init"  : "init_hook",
+            "resume": "resume_hook",
+            "pause" : "pause_hook",
+            "stop"  : "stop_hook"
+        },
+        "docs"    : {
+            "pdName" : "docs",
+            "pdAlias": "kilroy.docs.docs",
+            "desc"  : "Kilroy Reference",
+            "runOnStart": true,
+            "visible": true,
+            "multipleAllowed": false,
+            "init"  : "init_hook",
+            "resume": "resume_hook",
+            "pause" : "pause_hook",
+            "stop"  : "stop_hook"
+        }
+    }
+}
