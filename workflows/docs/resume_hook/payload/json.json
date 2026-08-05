@@ -1,40 +1,35 @@
 {
-    "name": "kilroy.docs/widget/resume_hook",
-    "version": "1",
-    "description": "",
-    "isInteractive": false,
-    "clean_up": true,
-    "inputs": [],
-    "outputs": [],
-    "args": {
-        "role": "*"
+  "name": "kilroy.docs/docs/resume_hook",
+  "version": "1",
+  "description": "Resume web widget — re-applies url, dimensions, and scale from webhook_args",
+  "isInteractive": false,
+  "clean_up": true,
+  "inputs": [],
+  "outputs": ["alias", "pd_alias", "url", "description", "guid", "width", "height", "scale", "scaled_width", "scaled_height", "webwidget_close_event", "webwidget_lifecycle_state"],
+  "args": {"role": "*"},
+  "steps": [
+    {
+      "operation": "set_value",
+      "isServer": true,
+      "args": {"variable": "wfCleanupFlag", "value": "1"}
     },
-    "steps": [
-        {
-            "operation": "set_value",
-            "isServer": true,
-            "args": {
-                "variable": "wfCleanupFlag",
-                "value": "1"
-            }
-        },
-        {
-            "operation": "step_group",
-            "isServer": true,
-            "args": {
-                "role": "system",
-                "message": "",
-                "timer": "24",
-                "isInteractive": false,
-                "canTerminate": false,
-                "success": []
-            }
-        },
-        {
-            "operation": "end",
-            "isServer": true,
-            "args": null
-        }
-    ],
-    "externalForms": {}
+    {
+      "operation": "step_group",
+      "isServer": true,
+      "args": {
+        "role": "*",
+        "message": "",
+        "timer": "24",
+        "isInteractive": false,
+        "canTerminate": false,
+        "success": []
+      }
+    },
+    {
+      "operation": "end",
+      "isServer": true,
+      "args": null
+    }
+  ],
+  "externalForms": {}
 }

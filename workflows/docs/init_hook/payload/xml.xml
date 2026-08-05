@@ -1,1 +1,93 @@
-<xml xmlns="http://www.w3.org/1999/xhtml"><block type="workflow_start" id="b8y9fJggqk+VoJzGC-cI" deletable="false" x="190" y="50"><field name="name">kilroy.docs/widget/init_hook</field><field name="version">1</field><field name="description"></field><field name="interactive">FALSE</field><field name="clean_up">TRUE</field><value name="OUTPUTS"><block type="process_variable_all" id="[baP4qH?m`vxpMcn}C4z"><mutation variable_count="5"></mutation><value name="INPUT0"><block type="process_variable" id="Wm0^YnnWLV5^Kp9R+4g5"><field name="process_variable_val">pd_alias</field></block></value><value name="INPUT1"><block type="process_variable" id="6ReKJH,wptQ3tuwIF/e7"><field name="process_variable_val">ex_*</field></block></value><value name="INPUT2"><block type="process_variable" id="+v3T~~FTS(dyOAhoG5lo"><field name="process_variable_val">msg</field></block></value><value name="INPUT3"><block type="process_variable" id="q-4oq]g[@;5TQ4][_Hn_"><field name="process_variable_val">jmsg</field></block></value><value name="INPUT4"><block type="process_variable" id="Yym+r@op2W$7#(7DV3~X"><field name="process_variable_val">widget_*</field></block></value></block></value><next><block type="step_group" id="@5#DWeAnwxT4Tf3(T2xd"><field name="role">system</field><field name="timer">24</field><field name="interactive">FALSE</field><field name="can_terminate">FALSE</field><field name="message"></field><statement name="success"><block type="set_var_to" id="2A?^`,v79SK-=./Nyx)y"><field name="var_name">args</field><value name="var_expr"><block type="var_json_stringify" id="F+v8XhMVH(0;Wyo12aR@"><field name="formatted">TRUE</field><value name="json"><block type="var_variable" id="Vn/-wnbkKV30M!rOL4Hy"><field name="var_name">webhook_args</field></block></value></block></value><next><block type="set_value" id="e%;n}PpA`u~Drei3J(8P"><field name="variable">jmsg</field><field name="value">${args}</field><next><block type="comment" id="U)gY3ky@keKP!7U.)N_A"><field name="comment">New diagrams get their alias passed in webhook_args. Save it.</field><next><block type="set_var_to" id="xWiz_|yJ5x[kv#/iBh!a"><field name="var_name">pd_alias</field><value name="var_expr"><block type="var_object" id="EsF!l$n+]-yal^bml3-}"><field name="obj_name">webhook_args</field><field name="field_name">alias</field></block></value><next><block type="set_var_to" id="0g}E/Ez!fvp{~2C=Y?~d"><field name="var_name">widget_desc</field><value name="var_expr"><block type="var_object" id=";rkw17~hlZ|HUg^^hGME"><field name="obj_name">webhook_args</field><field name="field_name">desc</field></block></value><next><block type="comment" id="{p@Bg!4jj(^.fh7x!)MD"><field name="comment">set a default theme for the app</field><next><block type="set_var_to" id="%}9@FeTu2FRExi6u:xa]"><field name="var_name">ex_style</field><value name="var_expr"><block type="var_object" id="PWjMT@|)(6)W*O~NJ$|@"><field name="obj_name">webhook_args</field><field name="field_name">ex_style</field></block></value><next><block type="comment" id="-%c5XmS=wgQ|S3kyg-Jk"><field name="comment">pass ex_style to our own set_style webhook</field><next><block type="trigger_pd" id="C,Vh(by|^B)zsf4xpS~f"><field name="pd_id">${process_diagram_id}</field><field name="trigger_name">set_style</field><field name="synchronous">TRUE</field><field name="copyOutputs">TRUE</field><field name="args">{"ex_style":"${ex_style}"}</field><next><block type="comment" id="751ac,{[T*usG5xtMu.`"><field name="comment">Set other vars here.</field><next><block type="set_value" id=";@0Q^ytRNfP{|51WrJCF"><field name="variable">msg</field><field name="value">Initialized with alias ${pd_alias}</field><next><block type="comment" id="|h!DT$`bRU!g)pR6t`B)"><field name="comment">Remember to export them as Outputs above as appropriate.</field><next><block type="comment" id="iYg?I3/l#gQvYeWX%-@i"><field name="comment">Finally, fall through to "resume_hook" if needed</field><next><block type="trigger_pd" id="lmF_u,X[PWEfXK1bA(uc"><field name="pd_id">${process_diagram_id}</field><field name="trigger_name">resume_hook</field><field name="synchronous">TRUE</field><field name="copyOutputs">FALSE</field><field name="args">{}</field><next><block type="comment" id=";N7F%l-46|+(KXE|/]AC"><field name="comment">Initialize a few demo vars for widgets</field><next><block type="set_value" id="I30B5Kes(k%sg:i(17+U"><field name="variable">widget_style</field><field name="value">${ex_style}</field><next><block type="set_value" id="7|vfHB33^#pI-@z72Jn?"><field name="variable">widget_template</field><field name="value"></field></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></statement><next><block type="workflow_end" id="Ub?h9a`t,Etsd=M0U|uJ"></block></next></block></next></block></xml>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="workflow_start" id="blk_001" deletable="false" x="190" y="50">
+    <field name="name">kilroy.docs/docs/init_hook</field>
+    <field name="version">1</field>
+    <field name="description">Initialize web widget — reads url, title, dimensions, scale from webhook_args</field>
+    <field name="interactive">FALSE</field>
+    <field name="clean_up">TRUE</field>
+    <value name="OUTPUTS">
+      <block type="process_variable_all" id="blk_002">
+        <mutation variable_count="13"/>
+        <value name="INPUT0">
+          <block type="process_variable" id="blk_003">
+            <field name="process_variable_val">alias</field>
+          </block>
+        </value>
+        <value name="INPUT1">
+          <block type="process_variable" id="blk_004">
+            <field name="process_variable_val">pd_alias</field>
+          </block>
+        </value>
+        <value name="INPUT2">
+          <block type="process_variable" id="blk_005">
+            <field name="process_variable_val">url</field>
+          </block>
+        </value>
+        <value name="INPUT3">
+          <block type="process_variable" id="blk_006">
+            <field name="process_variable_val">description</field>
+          </block>
+        </value>
+        <value name="INPUT4">
+          <block type="process_variable" id="blk_007">
+            <field name="process_variable_val">guid</field>
+          </block>
+        </value>
+        <value name="INPUT5">
+          <block type="process_variable" id="blk_008">
+            <field name="process_variable_val">width</field>
+          </block>
+        </value>
+        <value name="INPUT6">
+          <block type="process_variable" id="blk_009">
+            <field name="process_variable_val">height</field>
+          </block>
+        </value>
+        <value name="INPUT7">
+          <block type="process_variable" id="blk_010">
+            <field name="process_variable_val">scale</field>
+          </block>
+        </value>
+        <value name="INPUT8">
+          <block type="process_variable" id="blk_011">
+            <field name="process_variable_val">scaled_width</field>
+          </block>
+        </value>
+        <value name="INPUT9">
+          <block type="process_variable" id="blk_012">
+            <field name="process_variable_val">scaled_height</field>
+          </block>
+        </value>
+        <value name="INPUT10">
+          <block type="process_variable" id="blk_013">
+            <field name="process_variable_val">owner_user_id</field>
+          </block>
+        </value>
+        <value name="INPUT11">
+          <block type="process_variable" id="blk_014">
+            <field name="process_variable_val">wfCurrentUserId</field>
+          </block>
+        </value>
+        <value name="INPUT12">
+          <block type="process_variable" id="blk_015">
+            <field name="process_variable_val">webwidget_lifecycle_state</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <next>
+      <block type="step_group" id="blk_016">
+        <field name="role">*</field>
+        <field name="timer">24</field>
+        <field name="interactive">FALSE</field>
+        <field name="can_terminate">FALSE</field>
+        <field name="message"/>
+        <statement name="success">
+        </statement>
+        <next>
+          <block type="workflow_end" id="blk_017"/>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

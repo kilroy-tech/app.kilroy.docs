@@ -1,0 +1,43 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="workflow_start" id="blk_001" deletable="false" x="190" y="50">
+    <field name="name">kilroy.docs/docs/get_message_filters</field>
+    <field name="version">1</field>
+    <field name="description">Read webwidget message filters</field>
+    <field name="interactive">FALSE</field>
+    <field name="clean_up">TRUE</field>
+    <value name="OUTPUTS">
+      <block type="process_variable_all" id="blk_002">
+        <mutation variable_count="3"/>
+        <value name="INPUT0">
+          <block type="process_variable" id="blk_003">
+            <field name="process_variable_val">webwidget_message_filters</field>
+          </block>
+        </value>
+        <value name="INPUT1">
+          <block type="process_variable" id="blk_004">
+            <field name="process_variable_val">webwidget_message_filters_json</field>
+          </block>
+        </value>
+        <value name="INPUT2">
+          <block type="process_variable" id="blk_005">
+            <field name="process_variable_val">webwidget_message_filters_count</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <next>
+      <block type="step_group" id="blk_006">
+        <field name="role">*</field>
+        <field name="timer">24</field>
+        <field name="interactive">FALSE</field>
+        <field name="can_terminate">FALSE</field>
+        <field name="message"/>
+        <statement name="success">
+        </statement>
+        <next>
+          <block type="workflow_end" id="blk_007"/>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

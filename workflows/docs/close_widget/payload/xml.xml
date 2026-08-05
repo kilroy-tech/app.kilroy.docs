@@ -1,1 +1,41 @@
-<xml xmlns="http://www.w3.org/1999/xhtml"><block type="workflow_start" id="b8y9fJggqk+VoJzGC-cI" deletable="false" x="190" y="50"><field name="name">kilroy.docs/widget/close_widget</field><field name="version">1</field><field name="description"></field><field name="interactive">TRUE</field><field name="clean_up">TRUE</field><value name="OUTPUTS"><block type="process_variable_all" id="[baP4qH?m`vxpMcn}C4z"><mutation variable_count="1"></mutation><value name="INPUT0"><block type="process_variable" id="6ReKJH,wptQ3tuwIF/e7"><field name="process_variable_val"></field></block></value></block></value><next><block type="step_group" id="@5#DWeAnwxT4Tf3(T2xd"><field name="role">*</field><field name="timer">24</field><field name="interactive">TRUE</field><field name="can_terminate">TRUE</field><field name="message"></field><statement name="success"><block type="simple_inline_form" id="KuC_kjnA7!],RBGa#b5m"><field name="form_id">default</field><field name="sif_title">Stop this widget?</field><field name="sif_desc"></field><statement name="success"><block type="stop_app_diagram" id="]lM4ix*{#3PjBQ)lq6gv"><field name="pdalias">${pd_alias}</field></block></statement></block></statement><next><block type="workflow_end" id="Ub?h9a`t,Etsd=M0U|uJ"></block></next></block></next></block></xml>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="workflow_start" id="blk_001" deletable="false" x="190" y="50">
+    <field name="name">kilroy.docs/docs/close_widget</field>
+    <field name="version">1</field>
+    <field name="description">Stop and close this web widget PD</field>
+    <field name="interactive">FALSE</field>
+    <field name="clean_up">TRUE</field>
+    <value name="OUTPUTS">
+      <block type="process_variable_all" id="blk_002">
+        <mutation variable_count="2"/>
+        <value name="INPUT0">
+          <block type="process_variable" id="blk_003">
+            <field name="process_variable_val">webwidget_close_event</field>
+          </block>
+        </value>
+        <value name="INPUT1">
+          <block type="process_variable" id="blk_004">
+            <field name="process_variable_val">webwidget_lifecycle_state</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <next>
+      <block type="step_group" id="blk_005">
+        <field name="role">*</field>
+        <field name="timer">24</field>
+        <field name="interactive">FALSE</field>
+        <field name="can_terminate">FALSE</field>
+        <field name="message"/>
+        <statement name="success">
+          <block type="stop_app_diagram" id="blk_006">
+            <field name="pdalias">${alias}</field>
+          </block>
+        </statement>
+        <next>
+          <block type="workflow_end" id="blk_007"/>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

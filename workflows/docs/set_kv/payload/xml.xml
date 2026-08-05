@@ -1,0 +1,48 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="workflow_start" id="blk_001" deletable="false" x="190" y="50">
+    <field name="name">kilroy.docs/docs/set_kv</field>
+    <field name="version">1</field>
+    <field name="description">Persist a webwidget KV pair</field>
+    <field name="interactive">FALSE</field>
+    <field name="clean_up">TRUE</field>
+    <value name="OUTPUTS">
+      <block type="process_variable_all" id="blk_002">
+        <mutation variable_count="4"/>
+        <value name="INPUT0">
+          <block type="process_variable" id="blk_003">
+            <field name="process_variable_val">ww_.*</field>
+          </block>
+        </value>
+        <value name="INPUT1">
+          <block type="process_variable" id="blk_004">
+            <field name="process_variable_val">webwidget_kv_key</field>
+          </block>
+        </value>
+        <value name="INPUT2">
+          <block type="process_variable" id="blk_005">
+            <field name="process_variable_val">webwidget_kv_value</field>
+          </block>
+        </value>
+        <value name="INPUT3">
+          <block type="process_variable" id="blk_006">
+            <field name="process_variable_val">webwidget_kv_json</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <next>
+      <block type="step_group" id="blk_007">
+        <field name="role">*</field>
+        <field name="timer">24</field>
+        <field name="interactive">FALSE</field>
+        <field name="can_terminate">FALSE</field>
+        <field name="message"/>
+        <statement name="success">
+        </statement>
+        <next>
+          <block type="workflow_end" id="blk_008"/>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

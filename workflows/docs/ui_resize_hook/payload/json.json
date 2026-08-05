@@ -1,0 +1,35 @@
+{
+  "name": "kilroy.docs/docs/ui_resize_hook",
+  "version": "1",
+  "description": "Recompute scaled_width / scaled_height when the widget is resized",
+  "isInteractive": false,
+  "clean_up": true,
+  "inputs": [],
+  "outputs": ["width", "height", "scaled_width", "scaled_height"],
+  "args": {"role": "*"},
+  "steps": [
+    {
+      "operation": "set_value",
+      "isServer": true,
+      "args": {"variable": "wfCleanupFlag", "value": "1"}
+    },
+    {
+      "operation": "step_group",
+      "isServer": true,
+      "args": {
+        "role": "*",
+        "message": "",
+        "timer": "24",
+        "isInteractive": false,
+        "canTerminate": false,
+        "success": []
+      }
+    },
+    {
+      "operation": "end",
+      "isServer": true,
+      "args": null
+    }
+  ],
+  "externalForms": {}
+}

@@ -1,0 +1,27 @@
+{
+  "name": "kilroy.docs/docs/get_kv",
+  "version": "1",
+  "description": "Read a webwidget KV pair",
+  "isInteractive": false,
+  "clean_up": true,
+  "inputs": [],
+  "outputs": ["ww_.*", "webwidget_kv_key", "webwidget_kv_value", "webwidget_kv_exists", "webwidget_kv_json"],
+  "args": {"role": "*"},
+  "steps": [
+    {"operation": "set_value", "isServer": true, "args": {"variable": "wfCleanupFlag", "value": "1"}},
+    {
+      "operation": "step_group",
+      "isServer": true,
+      "args": {
+        "role": "*",
+        "message": "",
+        "timer": "24",
+        "isInteractive": false,
+        "canTerminate": false,
+        "success": []
+      }
+    },
+    {"operation": "end", "isServer": true, "args": null}
+  ],
+  "externalForms": {}
+}

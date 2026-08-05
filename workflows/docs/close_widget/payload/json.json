@@ -1,72 +1,44 @@
 {
-    "name": "kilroy.docs/widget/close_widget",
-    "version": "1",
-    "description": "",
-    "isInteractive": true,
-    "clean_up": true,
-    "inputs": [],
-    "outputs": [],
-    "args": {
-        "role": "*"
+  "name": "kilroy.docs/docs/close_widget",
+  "version": "1",
+  "description": "Stop and close this web widget PD",
+  "isInteractive": false,
+  "clean_up": true,
+  "inputs": [],
+  "outputs": ["webwidget_close_event", "webwidget_lifecycle_state"],
+  "args": {"role": "*"},
+  "steps": [
+    {
+      "operation": "set_value",
+      "isServer": true,
+      "args": {"variable": "wfCleanupFlag", "value": "1"}
     },
-    "steps": [
-        {
-            "operation": "set_value",
+    {
+      "operation": "step_group",
+      "isServer": true,
+      "args": {
+        "role": "*",
+        "message": "",
+        "timer": "24",
+        "isInteractive": false,
+        "canTerminate": false,
+        "success": [
+          {
+            "operation": "app_services",
             "isServer": true,
             "args": {
-                "variable": "wfCleanupFlag",
-                "value": "1"
+              "cmd": "stop_app_diagram",
+              "pdalias": "${alias}"
             }
-        },
-        {
-            "operation": "step_group",
-            "isServer": true,
-            "args": {
-                "role": "*",
-                "message": "",
-                "timer": "24",
-                "isInteractive": true,
-                "canTerminate": true,
-                "success": [
-                    {
-                        "operation": "display_inline_form",
-                        "isServer": false,
-                        "args": {
-                            "formID": "default",
-                            "form": {
-                                "formPanels": [
-                                    {
-                                        "name": "Stop this widget?",
-                                        "description": "",
-                                        "sections": [
-                                            {
-                                                "fields": []
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            "success": [
-                                {
-                                    "operation": "app_services",
-                                    "isServer": true,
-                                    "args": {
-                                        "cmd": "stop_app_diagram",
-                                        "pdalias": "${pd_alias}"
-                                    }
-                                }
-                            ],
-                            "failure": []
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "operation": "end",
-            "isServer": true,
-            "args": null
-        }
-    ],
-    "externalForms": {}
+          }
+        ]
+      }
+    },
+    {
+      "operation": "end",
+      "isServer": true,
+      "args": null
+    }
+  ],
+  "externalForms": {}
 }
