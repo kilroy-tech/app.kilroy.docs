@@ -11,12 +11,12 @@
     "locked"        : true,
     "override"      : true,
     "hidden"        : false,
-    "start"         : "user",
+    "start"         : "start_on_launch",
     "pdClasses": {
         "docs": {
             "pdName": "docs",
             "pdAlias": "kilroy.docs.docs",
-            "desc": "Kilroy Docs",
+            "desc": "Kilroy Documentation",
             "runOnStart": true,
             "visible": true,
             "multipleAllowed": false,
