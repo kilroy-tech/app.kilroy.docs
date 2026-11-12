@@ -888,10 +888,12 @@
 <p><code>OK</code> confirms injection, not delivery to every swarm participant, acceptance by an AI input filter, successful tool execution, or delivery of an out-of-band result. Callers must not use a longer HTTP timeout to wait for AI completion. The listener provides no queue, replay, deduplication, or exactly-once processing guarantee in this workflow; retries may produce duplicate work.</p>
 <h2 id="bridge-and-receiving-pipeline-contract">Bridge and Receiving Pipeline Contract</h2>
 <p>The catalogued Listener Bridge is a <code>pipeline_template_addon</code> with <code>allow_multiple: false</code>. Its graph is:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>${listener_swarm} -&gt; listener_bridge (pass-through wf_agent) -&gt; ${group_private_swarm}
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{{listener_swarm}} -&gt; listener_bridge (pass-through wf_agent) -&gt; ${group_private_swarm}
 </code></pre></div>
 <ul>
-<li><code>listener_swarm</code> defaults to <code>listener_swarm</code> and must match the service's Listener Swarm Name exactly.</li>
+<li>The Listener Bridge add-on exposes a visible <code>listener_swarm_name</code> pipeline variable whose default is <code>{{listener_swarm}}</code>. Group Manager shows that macro in Edit Variables; leaving it unchanged resolves to the effective listener name of the Kilroy backend deploying the pipeline. Ordinary <code>${...}</code> defaults and group overrides are applied first, and the reserved macro is then expanded only in the selected variable value. A literal remote swarm name overrides the macro and is passed through without local resolution.</li>
+<li>The backend creates and persists a random UUIDv4-format default Listener Swarm Name in its platform key-value service settings on first WebHooks PDI initialization. User-entered and <code>LISTENER_SWARM_NAME</code> override values may be any nonempty swarm name accepted by the underlying swarm library. If the environment variable is set, the WebHooks Settings UI displays its value as read-only.</li>
+<li>Setting changes affect new deployments. Existing bridges stay joined to their old topic and require group redeployment.</li>
 <li>The Groups manager supplies <code>group_private_swarm</code>. It is not an external caller's destination argument.</li>
 <li>The bridge receives all sender names (<code>*</code>) and calls no transformation webhook. It supplies no reverse edge from the group back to the listener swarm.</li>
 <li>The standard Basic Group Agent private-input filter accepts <code>/wa</code> messages from senders other than <code>Kilroy</code> and forwards accepted traffic toward its AI input. Other templates must be checked against their own routing rules.</li>
